@@ -1,0 +1,290 @@
+[
+    {
+        "label": "pdfplumber",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pdfplumber",
+        "description": "pdfplumber",
+        "detail": "pdfplumber",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_community.embeddings",
+        "description": "langchain_community.embeddings",
+        "isExtraImport": true,
+        "detail": "langchain_community.embeddings",
+        "documentation": {}
+    },
+    {
+        "label": "Chroma",
+        "importPath": "langchain_chroma",
+        "description": "langchain_chroma",
+        "isExtraImport": true,
+        "detail": "langchain_chroma",
+        "documentation": {}
+    },
+    {
+        "label": "Chroma",
+        "importPath": "langchain_chroma",
+        "description": "langchain_chroma",
+        "isExtraImport": true,
+        "detail": "langchain_chroma",
+        "documentation": {}
+    },
+    {
+        "label": "Document",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
+        "documentation": {}
+    },
+    {
+        "label": "generate_embeding",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "generate_embeding",
+        "description": "generate_embeding",
+        "detail": "generate_embeding",
+        "documentation": {}
+    },
+    {
+        "label": "vector",
+        "importPath": "generate_embeding",
+        "description": "generate_embeding",
+        "isExtraImport": true,
+        "detail": "generate_embeding",
+        "documentation": {}
+    },
+    {
+        "label": "GoogleGenerativeAIEmbeddings",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_huggingface",
+        "description": "langchain_huggingface",
+        "isExtraImport": true,
+        "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "signal",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "signal",
+        "description": "signal",
+        "detail": "signal",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "google.generativeai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "google.generativeai",
+        "description": "google.generativeai",
+        "detail": "google.generativeai",
+        "documentation": {}
+    },
+    {
+        "label": "DynamicClass",
+        "kind": 6,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "class DynamicClass:\n    def __init__(self, topic, degree, semester_fee, total_fee, email, contact_no):\n        self.topic = topic  # Faculty or topic\n        self.degree = degree\n        self.semester_fee = semester_fee\n        self.total_fee = total_fee\n        self.email = email\n        self.contact_no = contact_no\n    def __repr__(self):\n        return (f\"Faculty={self.topic}, Degree={self.degree}, Semester Fee={self.semester_fee}, \"",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "extract_tables_from_pdf",
+        "kind": 2,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "def extract_tables_from_pdf(pdf_path):\n    tables_with_topics = []\n    with pdfplumber.open(pdf_path) as pdf:\n        for page in pdf.pages:\n            # Extract topic and table data from each page\n            topic = page.extract_text().split('\\n')[0].strip()  # Assuming first line is the topic\n            table = page.extract_table()\n            if table:\n                # Store table data along with its topic\n                tables_with_topics.append((topic, table))",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "clean_and_convert_to_dataframe",
+        "kind": 2,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "def clean_and_convert_to_dataframe(topic, raw_table):\n    # Convert to DataFrame and clean the data\n    df = pd.DataFrame(raw_table[1:], columns=raw_table[0])  # Assuming first row as header\n    df = df.applymap(lambda x: x.replace('\\n', ' ') if isinstance(x, str) else x)\n    df.columns = ['Degree', 'Semester Fee', 'Total Programme Fee', 'Email', 'Contact No']\n    return df\n# Define the Dynamic Class\nclass DynamicClass:\n    def __init__(self, topic, degree, semester_fee, total_fee, email, contact_no):\n        self.topic = topic  # Faculty or topic",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "embed_data",
+        "kind": 2,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "def embed_data(data, embeddings):\n    return embeddings.embed_query(data)\n# Path to the PDF file\npdf_path = 'Course.pdf'  # Change this to the path of your PDF file\ntables_with_topics = extract_tables_from_pdf(pdf_path)\nembeddings = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n# embeddings = GoogleGenerativeAIEmbeddings(model=\"models/embedding-001\")\n# Store all programs and their embeddings\nall_programs = []\nall_documents = []  # Store as a list of Document objects",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "pdf_path",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "pdf_path = 'Course.pdf'  # Change this to the path of your PDF file\ntables_with_topics = extract_tables_from_pdf(pdf_path)\nembeddings = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n# embeddings = GoogleGenerativeAIEmbeddings(model=\"models/embedding-001\")\n# Store all programs and their embeddings\nall_programs = []\nall_documents = []  # Store as a list of Document objects\nfor topic, raw_table in tables_with_topics:\n    df_clean = clean_and_convert_to_dataframe(topic, raw_table)\n    # Create DynamicClass objects for the current table",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "tables_with_topics",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "tables_with_topics = extract_tables_from_pdf(pdf_path)\nembeddings = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n# embeddings = GoogleGenerativeAIEmbeddings(model=\"models/embedding-001\")\n# Store all programs and their embeddings\nall_programs = []\nall_documents = []  # Store as a list of Document objects\nfor topic, raw_table in tables_with_topics:\n    df_clean = clean_and_convert_to_dataframe(topic, raw_table)\n    # Create DynamicClass objects for the current table\n    for index, row in df_clean.iterrows():",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "embeddings",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "embeddings = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n# embeddings = GoogleGenerativeAIEmbeddings(model=\"models/embedding-001\")\n# Store all programs and their embeddings\nall_programs = []\nall_documents = []  # Store as a list of Document objects\nfor topic, raw_table in tables_with_topics:\n    df_clean = clean_and_convert_to_dataframe(topic, raw_table)\n    # Create DynamicClass objects for the current table\n    for index, row in df_clean.iterrows():\n        program = DynamicClass(",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "all_programs",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "all_programs = []\nall_documents = []  # Store as a list of Document objects\nfor topic, raw_table in tables_with_topics:\n    df_clean = clean_and_convert_to_dataframe(topic, raw_table)\n    # Create DynamicClass objects for the current table\n    for index, row in df_clean.iterrows():\n        program = DynamicClass(\n            topic,\n            row['Degree'],\n            row['Semester Fee'],",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "all_documents",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "all_documents = []  # Store as a list of Document objects\nfor topic, raw_table in tables_with_topics:\n    df_clean = clean_and_convert_to_dataframe(topic, raw_table)\n    # Create DynamicClass objects for the current table\n    for index, row in df_clean.iterrows():\n        program = DynamicClass(\n            topic,\n            row['Degree'],\n            row['Semester Fee'],\n            row['Total Programme Fee'],",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "vectorstore",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "vectorstore = Chroma.from_documents(documents=all_documents, embedding=embeddings, persist_directory=\"findcourseDB\")\n# Assuming vectorstore is your Chroma vector store object\ndocument_count = vectorstore._collection.count()\nprint(f\"Total number of documents stored: {document_count}\")\nprint(\"Vector store initialized and stored in 'vectorstore' directory.\")",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "document_count",
+        "kind": 5,
+        "importPath": "App",
+        "description": "App",
+        "peekOfCode": "document_count = vectorstore._collection.count()\nprint(f\"Total number of documents stored: {document_count}\")\nprint(\"Vector store initialized and stored in 'vectorstore' directory.\")",
+        "detail": "App",
+        "documentation": {}
+    },
+    {
+        "label": "signal_handler",
+        "kind": 2,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "def signal_handler(sig, frame):\n    print('\\nWelcome To Findbest Course')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "generate_rag_prompt",
+        "kind": 2,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "def generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:\n    {escaped}\n    From the list of course details above, provide a list of the top recommended courses that match the user's query. \n    Highlight the course title, faculty, semester fee, total fee, email, and contact number for each recommended course.\n    If You haven't found any course, please provide a message to the user indicating that no relevant courses were found based on the query.",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "get_relevent_context_from_db",
+        "kind": 2,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "def get_relevent_context_from_db(query):\n    context = \"\"\n    # embeddings_function = HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')\n    embeddings_function = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n    # Use the correct parameter name: embedding_function instead of embedding\n    vector_db = Chroma(persist_directory=\"./findcourseDB\", embedding_function=embeddings_function)\n    # Perform similarity search\n    search_results = vector_db.similarity_search(query, k=10)\n    for result in search_results:\n        context += result.page_content + \"\\n\"",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "generate_answer",
+        "kind": 2,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "def generate_answer(prompt):\n    genai.configure(api_key=google_api_key)\n    model = genai.GenerativeModel(model_name=\"gemini-pro\")\n    answer = model.generate_content(prompt)\n    return answer.text\nwelcome_text = generate_answer(\"Welcome To Findbest Course\")\nprint(welcome_text)\n# Main loop to handle user queries\nwhile True:\n    print(\"---------------------------------------------------\")",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "google_api_key",
+        "kind": 5,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "google_api_key = os.getenv(\"GOOGLE_API_KEY\")\n# Function to handle exit signal\ndef signal_handler(sig, frame):\n    print('\\nWelcome To Findbest Course')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "welcome_text",
+        "kind": 5,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "welcome_text = generate_answer(\"Welcome To Findbest Course\")\nprint(welcome_text)\n# Main loop to handle user queries\nwhile True:\n    print(\"---------------------------------------------------\")\n    print(\"What You Want?\")\n    query = input(\"query: \")\n    context = get_relevent_context_from_db(query)\n    prompt = generate_rag_prompt(query = query, context = context)\n    answer = generate_answer(prompt = prompt)",
+        "detail": "Ask",
+        "documentation": {}
+    }
+]
