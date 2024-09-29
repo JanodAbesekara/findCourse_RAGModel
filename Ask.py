@@ -35,8 +35,7 @@ def generate_rag_prompt(query, context):
     If You haven't found any course, please provide a message to the user indicating that no relevant courses were found based on the query.
     If the context is not sufficient to generate a response, please provide a message to the user indicating that more information is needed to generate a response.
                  QUESTION:'{query}'
-                 CONTEXT:'{context}'
-                 
+                 CONTEXT:'{context}'              
             ANSWER:     
     """).format(query=query, context=context)
     return prompt
@@ -48,7 +47,8 @@ def generate_rag_prompt(query, context):
     
     
 # Function to get relevant context from the database
-def get_relevent_context_from_db(query):
+def 
+get_relevent_context_from_db(query):
     context = ""
 
     # embeddings_function = HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')
@@ -65,10 +65,11 @@ def get_relevent_context_from_db(query):
 
 def generate_answer(prompt):
     genai.configure(api_key=google_api_key)
-    model = genai.GenerativeModel(model_name="gemini-pro")
+    model = genai.GenerativeModel(model_name="gemini-1.5-flash")
     answer = model.generate_content(prompt)
     return answer.text
 
+#Gemini_1.5_Flash
 
 welcome_text = generate_answer("Welcome To Findbest Course")
 print(welcome_text)
