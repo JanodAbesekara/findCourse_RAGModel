@@ -46,7 +46,7 @@ class DynamicClass:
 
 # Embed and vectorize the data
 def embed_data(data, embeddings):
-    return embeddings.embed_query(data)
+    return embeddings.embed_query(data)  
 
 # Path to the PDF file
 pdf_path = 'Course.pdf'  # Change this to the path of your PDF file
@@ -69,7 +69,7 @@ for topic, raw_table in tables_with_topics:
             topic,
             row['Degree'],
             row['Semester Fee'],
-            row['Total Programme Fee'],
+            row['Total Programme Fee'], 
             row['Email'],
             row['Contact No']
         )
