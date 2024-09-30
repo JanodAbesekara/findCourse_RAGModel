@@ -91,6 +91,22 @@
         "documentation": {}
     },
     {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "HuggingFaceEmbeddings",
         "importPath": "langchain_huggingface",
         "description": "langchain_huggingface",
@@ -135,28 +151,28 @@
         "documentation": {}
     },
     {
-        "label": "FastAPI",
-        "importPath": "fastapi",
-        "description": "fastapi",
-        "isExtraImport": true,
-        "detail": "fastapi",
-        "documentation": {}
-    },
-    {
-        "label": "random",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "random",
-        "description": "random",
-        "detail": "random",
-        "documentation": {}
-    },
-    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "Ask",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "Ask",
+        "description": "Ask",
+        "detail": "Ask",
         "documentation": {}
     },
     {
@@ -259,11 +275,20 @@
         "documentation": {}
     },
     {
+        "label": "QueryRequest",
+        "kind": 6,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "class QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:\n    {escaped}",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
         "label": "signal_handler",
         "kind": 2,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "def signal_handler(sig, frame):\n    print('\\nWelcome To Findbest Course')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:",
+        "peekOfCode": "def signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\n# Model for user query input\nclass QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')",
         "detail": "Ask",
         "documentation": {}
     },
@@ -277,15 +302,11 @@
         "documentation": {}
     },
     {
-        "label": {
-            "name": "",
-            "kind": 2,
-            "peekOfCode": "def \nget_relevent_context_from_db(query):\n    context = \"\"\n    # embeddings_function = HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')\n    embeddings_function = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n    # Use the correct parameter name: embedding_function instead of embedding\n    vector_db = Chroma(persist_directory=\"./findcourseDB\", embedding_function=embeddings_function)\n    # Perform similarity search\n    search_results = vector_db.similarity_search(query, k=10)\n    for result in search_results:"
-        },
+        "label": "get_relevant_context_from_db",
         "kind": 2,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "def \nget_relevent_context_from_db(query):\n    context = \"\"\n    # embeddings_function = HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')\n    embeddings_function = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n    # Use the correct parameter name: embedding_function instead of embedding\n    vector_db = Chroma(persist_directory=\"./findcourseDB\", embedding_function=embeddings_function)\n    # Perform similarity search\n    search_results = vector_db.similarity_search(query, k=10)\n    for result in search_results:",
+        "peekOfCode": "def get_relevant_context_from_db(query):\n    context = \"\"\n    embeddings_function = HuggingFaceEmbeddings(model_name=\"sentence-transformers/all-MiniLM-L6-v2\")\n    vector_db = Chroma(persist_directory=\"./findcourseDB\", embedding_function=embeddings_function)\n    # Perform similarity search\n    search_results = vector_db.similarity_search(query, k=10)\n    for result in search_results:\n        context += result.page_content + \"\\n\"\n    return context\n# Function to generate answer using Google's Gemini model",
         "detail": "Ask",
         "documentation": {}
     },
@@ -294,7 +315,16 @@
         "kind": 2,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "def generate_answer(prompt):\n    genai.configure(api_key=google_api_key)\n    model = genai.GenerativeModel(model_name=\"gemini-1.5-flash\")\n    answer = model.generate_content(prompt)\n    return answer.text\n#Gemini_1.5_Flash\nwelcome_text = generate_answer(\"Welcome To Findbest Course\")\nprint(welcome_text)\n# Main loop to handle user queries\nwhile True:",
+        "peekOfCode": "def generate_answer(prompt):\n    model = genai.GenerativeModel(model_name=\"gemini-1.5-flash\")\n    response = model.generate_content(prompt)\n    return response.text\n# API route to handle user queries\n@app.post(\"/query\")\nasync def handle_query(request: QueryRequest):\n    query = request.query\n    context = get_relevant_context_from_db(query)\n    prompt = generate_rag_prompt(query=query, context=context)",
+        "detail": "Ask",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "Ask",
+        "description": "Ask",
+        "peekOfCode": "app = FastAPI()\n# Google API Key from environment variables\ngoogle_api_key = os.getenv(\"GOOGLE_API_KEY\")\n# Configure Google Generative AI\ngenai.configure(api_key=google_api_key)\n# Signal handler for graceful shutdown\ndef signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)",
         "detail": "Ask",
         "documentation": {}
     },
@@ -303,35 +333,8 @@
         "kind": 5,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "google_api_key = os.getenv(\"GOOGLE_API_KEY\")\n# Function to handle exit signal\ndef signal_handler(sig, frame):\n    print('\\nWelcome To Findbest Course')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.",
+        "peekOfCode": "google_api_key = os.getenv(\"GOOGLE_API_KEY\")\n# Configure Google Generative AI\ngenai.configure(api_key=google_api_key)\n# Signal handler for graceful shutdown\ndef signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\n# Model for user query input\nclass QueryRequest(BaseModel):",
         "detail": "Ask",
-        "documentation": {}
-    },
-    {
-        "label": "welcome_text",
-        "kind": 5,
-        "importPath": "Ask",
-        "description": "Ask",
-        "peekOfCode": "welcome_text = generate_answer(\"Welcome To Findbest Course\")\nprint(welcome_text)\n# Main loop to handle user queries\nwhile True:\n    print(\"---------------------------------------------------\")\n    print(\"What You Want?\")\n    query = input(\"query: \")\n    context = get_relevent_context_from_db(query)\n    prompt = generate_rag_prompt(query = query, context = context)\n    answer = generate_answer(prompt = prompt)",
-        "detail": "Ask",
-        "documentation": {}
-    },
-    {
-        "label": "DataModel",
-        "kind": 6,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "class DataModel(BaseModel):\n    name: str\n    age: int\n    email: str\n@app.post(\"/adddata\")\nasync def add_data(data: DataModel):\n    return {\"message\": \"Data added successfully\", \"data\": data}",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "app",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\nasync def read_root():\n    return {\"Hello\": \"World\"}\n@app.get(\"/random\")\nasync def random_number():\n    return random.randint(0, 100)\nclass DataModel(BaseModel):\n    name: str\n    age: int",
-        "detail": "main",
         "documentation": {}
     }
 ]
