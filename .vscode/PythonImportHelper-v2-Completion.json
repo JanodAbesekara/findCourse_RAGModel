@@ -167,6 +167,14 @@
         "documentation": {}
     },
     {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
         "label": "Ask",
         "kind": 6,
         "isExtraImport": true,
@@ -279,7 +287,7 @@
         "kind": 6,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "class QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:\n    {escaped}",
+        "peekOfCode": "class QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\n# def generate_rag_prompt(query, context):\n#     escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n#     prompt = (f\"\"\"\n#     Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n#     User's query: {query}\n#     Extracted course details:\n#     {escaped}",
         "detail": "Ask",
         "documentation": {}
     },
@@ -288,7 +296,7 @@
         "kind": 2,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "def signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\n# Model for user query input\nclass QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\ndef generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')",
+        "peekOfCode": "def signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)\n# Model for user query input\nclass QueryRequest(BaseModel):\n    query: str\n# Generate a RAG prompt based on user query and context\n# def generate_rag_prompt(query, context):\n#     escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')",
         "detail": "Ask",
         "documentation": {}
     },
@@ -297,7 +305,7 @@
         "kind": 2,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "def generate_rag_prompt(query, context):\n    escaped = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    prompt = (f\"\"\"\n    Based on the user's query: \"{query}\", please find the most relevant courses and details from the information below.\n    User's query: {query}\n    Extracted course details:\n    {escaped}\n    From the list of course details above, provide a list of the top recommended courses that match the user's query. \n    Highlight the course title, faculty, semester fee, total fee, email, and contact number for each recommended course.\n    If You haven't found any course, please provide a message to the user indicating that no relevant courses were found based on the query.",
+        "peekOfCode": "def generate_rag_prompt(query, context):\n    # Escape problematic characters and preserve formatting\n    escaped_context = context.replace(\"'\", \" \").replace('\"', ' ').replace('\\n', ' ')\n    # Check if the query is asking about Software Engineering (SE)\n    if query.lower() in ['se', 'software engineering']:\n        prompt = f\"\"\"\n        The user is asking about \"Software Engineering\" degrees (or SE). Please assist by finding the most relevant courses in Software Engineering from the provided context.\n        User's Query: \"{query}\"\n        Context (Course Details):\n        {escaped_context}",
         "detail": "Ask",
         "documentation": {}
     },
@@ -324,7 +332,7 @@
         "kind": 5,
         "importPath": "Ask",
         "description": "Ask",
-        "peekOfCode": "app = FastAPI()\n# Google API Key from environment variables\ngoogle_api_key = os.getenv(\"GOOGLE_API_KEY\")\n# Configure Google Generative AI\ngenai.configure(api_key=google_api_key)\n# Signal handler for graceful shutdown\ndef signal_handler(sig, frame):\n    print('\\nShutting down Findbest Course API')\n    sys.exit(0)\nsignal.signal(signal.SIGINT, signal_handler)",
+        "peekOfCode": "app = FastAPI()\n# CORS middleware configuration\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"http://localhost:3000\"],  # Adjust to match your frontend URL\n    allow_credentials=True,\n    allow_methods=[\"*\"],  # Allow all HTTP methods (GET, POST, etc.)\n    allow_headers=[\"*\"],  # Allow all headers (Authorization, etc.)\n)\n# Google API Key from environment variables",
         "detail": "Ask",
         "documentation": {}
     },
